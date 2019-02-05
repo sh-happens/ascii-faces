@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import Faces from "./Faces"
 import env from "./Environment";
+import LoadingDots from "./LoadingDots";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -63,7 +64,7 @@ class Home extends Component {
                 this.setState({
                     isLoading : false
                 })
-                let buffer = res.concat(this.fetchAds());
+                let buffer = res.concat(this.randomAd());
                 console.log("bufferring",buffer);
                 this.setState({ buffer });
                 window.scrollBy(0, -5);
@@ -88,7 +89,7 @@ class Home extends Component {
                 return response.json()
             })
             .then(res => {
-                let products = res.concat(this.fetchAds());           
+                let products = res.concat(this.randomAd());           
                 this.setState({ products, isLoading: false });
             }).then(() => {
                 this.setState({ pageNumber: pageNumber + 1 },() => this.loadBuffer());
@@ -107,21 +108,18 @@ class Home extends Component {
         });
 
     }
-    fetchAds() {
+    randomAd() {
         const { randomAd } = this.state;
+        let rid;
+        do{
+            rid = Math.floor(Math.random() * 1000);
+        }while(randomAd === rid); 
+        this.setState({ randomAd: rid });
     
-        let id = Math.floor(Math.random() * 1000);
-    
-        while (randomAd === id) {
-          id = Math.floor(Math.random() * 1000);
-        }
-    
-        this.setState({ randomAd: id });
-    
-        return { ad: id };
+        return { rid };
       }
     render() {
-        let { products, selectOptions } = this.state;
+        let { products, selectOptions,isLoading,totalProductCount,pageSize } = this.state;
 
         return (
             <div>
@@ -135,7 +133,7 @@ class Home extends Component {
                     )
                     }
                 </select>
-                <Faces products={products}></Faces>
+                <Faces products={products} isLoading={isLoading} totalProductCount={totalProductCount} pageSize={pageSize} ></Faces>
             </div>
         )
     }

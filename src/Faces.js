@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import env from "./Environment";
+import LoadingDots from "./LoadingDots";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -23,24 +24,32 @@ class Home extends Component {
         return `$${dollars}`;
     }
     render(){
-        let {products} = this.props;
+        let {products,totalProductCount,isLoading,pageSize} = this.props;
         let baseUrl = env.baseUrl;
-        return (              
-            products.map((product) => {
-                                     
-                if(product.hasOwnProperty('ad')){
-                    return <div><img src={`${baseUrl}/ads/?r=${product.ad}`}/></div>
-                }
-                return (<div>
-                    <span style={{fontSize:product.size}}>{product.face}</span>
-                    <div>{this.formatPrice(product.price)}</div>
-                    <div>{this.formatDate(product.date)}</div>
-                    <hr/>
-                </div>)
-            })
-                         
-      
-        )
+        let displayArray = []
+        let hasMore = products.length >= (totalProductCount + (totalProductCount/pageSize));
+        displayArray.push(products.map((product) => {                
+            if(product.hasOwnProperty('rid')){
+                return <div><img src={`${baseUrl}/ads/?r=${product.rid}`}/></div>
+            }
+            return (<div>
+                <span style={{fontSize:product.size}}>{product.face}</span>
+                <div>{this.formatPrice(product.price)}</div>
+                <div>{this.formatDate(product.date)}</div>
+                <hr/>
+            </div>)        
+        }) )
+        if(isLoading){
+            displayArray.push(<LoadingDots/>)
+        }
+        if(hasMore && products.length !== 0){
+            displayArray.push(<div>~ end of catalogue ~</div>)
+        }
+        return displayArray;                       
+            
+        
+        
+        
     }
 }
 export default Home;
