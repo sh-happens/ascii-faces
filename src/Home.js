@@ -10,6 +10,7 @@ class Home extends Component {
             totalProductCount: 0,
             products: [],
             buffer: [],
+            randomAd : "",
             isLoading: true,
             sort: null,
             selectOptions: [
@@ -49,7 +50,7 @@ class Home extends Component {
         }
 
     };
-    loadBuffer() {
+    loadBuffer() {  
         console.log("bunffer");
         this.setState({
             isLoading : true
@@ -58,11 +59,12 @@ class Home extends Component {
             .then(response => {
                 return response.json()
             })
-            .then(buffer => {
+            .then(res => {
                 this.setState({
                     isLoading : false
                 })
                 console.log("bufferring",buffer);
+                let buffer = res.concat(this.fetchAds());
                 this.setState({ buffer });
                 window.scrollBy(0, -5);
             });
@@ -85,7 +87,8 @@ class Home extends Component {
                 });
                 return response.json()
             })
-            .then(products => {
+            .then(res => {
+                let products = res.concat(this.fetchAds());           
                 this.setState({ products, isLoading: false });
             }).then(() => {
                 this.setState({ pageNumber: pageNumber + 1 },() => this.loadBuffer());
@@ -104,15 +107,29 @@ class Home extends Component {
         });
 
     }
+    fetchAds() {
+        const { randomAd } = this.state;
+    
+        let id = Math.floor(Math.random() * 1000);
+    
+        while (randomAd === id) {
+          id = Math.floor(Math.random() * 1000);
+        }
+    
+        this.setState({ randomAd: id });
+    
+        return { ad: id };
+      }
     render() {
         let { products, selectOptions } = this.state;
+
         return (
             <div>
                 <span>Sort by :</span>
                 <select onChange={this.handleOnChange.bind(this)}>
                     {
                     selectOptions.map((selectOption) =>
-                        <option value={selectOption.hiddenValue}>
+                        <option key={selectOption.hiddenValue} value={selectOption.hiddenValue}>
                             {selectOption.visibleValue}
                         </option>
                     )

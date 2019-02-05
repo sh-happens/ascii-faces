@@ -23,24 +23,21 @@ class Home extends Component {
     }
     render(){
         let {products} = this.props;
-        return (
-            <div>          
-                {
-                    products.map((product,index) => {
-                        // if((index + 1) % 20 === 0){
-                        //     return <div style={{color : 'red'}}>AD</div>
-                        // }
-                        return (<div>
-                            <span style={{fontSize:product.size}}>{product.face}</span>
-                            <div>{this.formatPrice(product.price)}</div>
-                            <div>{this.formatDate(product.date)}</div>
-                            <hr/>
-                        </div>)
-                    }
-                   
-                    )
-                }          
-            </div>
+        return (              
+            products.map((product) => {
+                                     
+                if(product.hasOwnProperty('ad')){
+                    return <div><img className="ad" src={`http://localhost:3000/ads/?r=${product.ad}`}/></div>
+                }
+                return (<div>
+                    <span style={{fontSize:product.size}}>{product.face}</span>
+                    <div>{this.formatPrice(product.price)}</div>
+                    <div>{this.formatDate(product.date)}</div>
+                    <hr/>
+                </div>)
+            })
+                         
+      
         )
     }
 }
