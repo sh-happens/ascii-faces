@@ -36,11 +36,11 @@ class Home extends Component {
         document.removeEventListener('scroll', this.trackScrolling);
     }
     trackScrolling = () => {
-        let { pageNumber, buffer, products, isLoading,totalProductCount } = this.state;
+        let { pageNumber, buffer, products, isLoading,totalProductCount,pageSize } = this.state;
         let userReachedBtm = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
         console.log(products.length);
-        
-        if (userReachedBtm && !isLoading && products.length <= totalProductCount) {
+        let hasMore = products.length <= (totalProductCount + (totalProductCount/pageSize) - 1);
+        if (userReachedBtm && !isLoading && hasMore) {
             console.log("scroll");
             console.log(buffer);
             this.setState({
@@ -63,8 +63,8 @@ class Home extends Component {
                 this.setState({
                     isLoading : false
                 })
-                console.log("bufferring",buffer);
                 let buffer = res.concat(this.fetchAds());
+                console.log("bufferring",buffer);
                 this.setState({ buffer });
                 window.scrollBy(0, -5);
             });

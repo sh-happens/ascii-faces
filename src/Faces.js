@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import env from "./Environment";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -23,11 +24,12 @@ class Home extends Component {
     }
     render(){
         let {products} = this.props;
+        let baseUrl = env.baseUrl;
         return (              
             products.map((product) => {
                                      
                 if(product.hasOwnProperty('ad')){
-                    return <div><img className="ad" src={`http://localhost:3000/ads/?r=${product.ad}`}/></div>
+                    return <div><img src={`${baseUrl}/ads/?r=${product.ad}`}/></div>
                 }
                 return (<div>
                     <span style={{fontSize:product.size}}>{product.face}</span>
