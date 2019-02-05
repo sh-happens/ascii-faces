@@ -23,6 +23,10 @@ class Home extends Component {
     componentWillMount() {
         this.loadFirstFetch();
     }
+    componentDidUpdate(){
+   
+        
+    }
     componentDidMount() {
         document.addEventListener('scroll', this.trackScrolling);
     }
@@ -31,28 +35,36 @@ class Home extends Component {
         document.removeEventListener('scroll', this.trackScrolling);
     }
     trackScrolling = () => {
-        let { pageNumber, buffer, products, isLoading } = this.state;
+        let { pageNumber, buffer, products, isLoading,totalProductCount } = this.state;
         let userReachedBtm = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
-        if (userReachedBtm && !isLoading) {
+        console.log(products.length);
+        
+        if (userReachedBtm && !isLoading && products.length <= totalProductCount) {
             console.log("scroll");
-            console.log(window.scrollY);
+            console.log(buffer);
             this.setState({
                 products: products.concat(buffer),
-                buffer: [],
-                pageNumber: this.state.pageNumber + 1,
-            })
-            this.loadBuffer();
+                pageNumber: pageNumber + 1,
+            },()=>this.loadBuffer())
         }
 
     };
     loadBuffer() {
         console.log("bunffer");
+        this.setState({
+            isLoading : true
+        })
         fetch(this.endpointConstruct())
             .then(response => {
                 return response.json()
             })
             .then(buffer => {
+                this.setState({
+                    isLoading : false
+                })
+                console.log("bufferring",buffer);
                 this.setState({ buffer });
+                window.scrollBy(0, -5);
             });
     }
     endpointConstruct(){
@@ -76,8 +88,8 @@ class Home extends Component {
             .then(products => {
                 this.setState({ products, isLoading: false });
             }).then(() => {
-                this.setState({ pageNumber: pageNumber + 1 });
-                this.loadBuffer();
+                this.setState({ pageNumber: pageNumber + 1 },() => this.loadBuffer());
+               
             });
     }
     handleOnChange(e){

@@ -26,15 +26,20 @@ class Home extends Component {
         return (
             <div>          
                 {
-                    products.map((product) => 
-                    <div>
-                        <span style={{fontSize:product.size}}>{product.face}</span>
-                        <div>{this.formatPrice(product.price)}</div>
-                        <div>{this.formatDate(product.date)}</div>
-                        <hr/>
-                    </div>
+                    products.map((product,index) => {
+                        // if((index + 1) % 20 === 0){
+                        //     return <div style={{color : 'red'}}>AD</div>
+                        // }
+                        return (<div>
+                            <span style={{fontSize:product.size}}>{product.face}</span>
+                            <div>{this.formatPrice(product.price)}</div>
+                            <div>{this.formatDate(product.date)}</div>
+                            <hr/>
+                        </div>)
+                    }
+                   
                     )
-                }
+                }          
             </div>
         )
     }
