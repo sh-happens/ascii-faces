@@ -2,7 +2,9 @@ import React, { Component } from "react"
 import Faces from "./Faces"
 import env from "./Environment";
 import LoadingDots from "./LoadingDots";
+import './style/style.css';
 class Home extends Component {
+    baseUrl = env.baseUrl;
     constructor(props) {
         super(props);
         this.state = {
@@ -72,8 +74,7 @@ class Home extends Component {
     }
     endpointConstruct(){
         let { pageNumber, pageSize, sort } = this.state;
-        let baseUrl = env.baseUrl;
-        let endpoint =   `${baseUrl}/products?_page=${pageNumber}&_limit=${pageSize}`;
+        let endpoint =   `${this.baseUrl}/products?_page=${pageNumber}&_limit=${pageSize}`;
         endpoint = sort !== null ? `${endpoint}&_sort=${sort}` : endpoint;
         
         return endpoint;
@@ -120,20 +121,31 @@ class Home extends Component {
       }
     render() {
         let { products, selectOptions,isLoading,totalProductCount,pageSize } = this.state;
-
+        let sponsorsId = Math.floor(Math.random()*1000);
+        let sponsors = `${this.baseUrl}/ads/?r=${sponsorsId}`
         return (
             <div>
-                <span>Sort by :</span>
-                <select onChange={this.handleOnChange.bind(this)}>
-                    {
-                    selectOptions.map((selectOption) =>
-                        <option key={selectOption.hiddenValue} value={selectOption.hiddenValue}>
-                            {selectOption.visibleValue}
-                        </option>
-                    )
-                    }
-                </select>
-                <Faces products={products} isLoading={isLoading} totalProductCount={totalProductCount} pageSize={pageSize} ></Faces>
+                <header className="navbar">
+                    <h1>Products Grid</h1>
+                </header>
+                <section className="products">
+                <p>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
+                <p>But first, a word from our sponsors:</p> 
+                <img class="sponsors" src={sponsors} />
+                    <div className="sort">
+                        <span>Sort by : </span>
+                        <select onChange={this.handleOnChange.bind(this)}>
+                            {
+                            selectOptions.map((selectOption) =>
+                                <option key={selectOption.hiddenValue} value={selectOption.hiddenValue}>
+                                    {selectOption.visibleValue}
+                                </option>
+                            )
+                            }
+                        </select>
+                    </div>
+                    <Faces products={products} isLoading={isLoading} totalProductCount={totalProductCount} pageSize={pageSize} ></Faces>
+                </section>            
             </div>
         )
     }

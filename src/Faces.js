@@ -30,14 +30,21 @@ class Home extends Component {
         let hasMore = products.length >= (totalProductCount + (totalProductCount/pageSize));
         displayArray.push(products.map((product) => {                
             if(product.hasOwnProperty('rid')){
-                return <div><img src={`${baseUrl}/ads/?r=${product.rid}`}/></div>
+                return (
+                <div className="card">
+                    <img className="ad" src={`${baseUrl}/ads/?r=${product.rid}`}/>
+                </div>
+                )
             }
-            return (<div>
-                <span style={{fontSize:product.size}}>{product.face}</span>
-                <div>{this.formatPrice(product.price)}</div>
-                <div>{this.formatDate(product.date)}</div>
-                <hr/>
-            </div>)        
+            return (
+                <div className="card">
+                    <span style={{fontSize:product.size}}>{product.face}</span>
+                    <div className="card-body">
+                        <div>{this.formatPrice(product.price)}</div>
+                        <div>{this.formatDate(product.date)}</div>
+                    </div>
+                </div>
+            )        
         }) )
         if(isLoading){
             displayArray.push(<LoadingDots/>)
