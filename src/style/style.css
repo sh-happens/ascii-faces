@@ -42,8 +42,6 @@ section{
     flex-direction: column;
     padding-left: 1em;
 }
-.card span{
-}
 .sort{
     margin: 1em 0;
 }

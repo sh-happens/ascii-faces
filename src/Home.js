@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import Faces from "./Faces"
 import env from "./Environment";
-import LoadingDots from "./LoadingDots";
 import './style/style.css';
 class Home extends Component {
     baseUrl = env.baseUrl;
@@ -41,11 +40,8 @@ class Home extends Component {
     trackScrolling = () => {
         let { pageNumber, buffer, products, isLoading,totalProductCount,pageSize } = this.state;
         let userReachedBtm = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
-        console.log(products.length);
         let hasMore = products.length <= (totalProductCount + (totalProductCount/pageSize) - 1);
         if (userReachedBtm && !isLoading && hasMore) {
-            console.log("scroll");
-            console.log(buffer);
             this.setState({
                 products: products.concat(buffer),
                 pageNumber: pageNumber + 1,
@@ -54,7 +50,6 @@ class Home extends Component {
 
     };
     loadBuffer() {  
-        console.log("bunffer");
         this.setState({
             isLoading : true
         })
@@ -67,7 +62,6 @@ class Home extends Component {
                     isLoading : false
                 })
                 let buffer = res.concat(this.randomAd());
-                console.log("bufferring",buffer);
                 this.setState({ buffer });
                 window.scrollBy(0, -5);
             });
@@ -80,8 +74,7 @@ class Home extends Component {
         return endpoint;
     }
     loadFirstFetch() {
-        console.log("loadFirstFetch");
-        let { pageNumber, pageSize } = this.state;
+        let { pageNumber } = this.state;
         fetch(this.endpointConstruct())
             .then(response => {
                 this.setState({
@@ -131,7 +124,7 @@ class Home extends Component {
                 <section className="products">
                 <p>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
                 <p>But first, a word from our sponsors:</p> 
-                <img class="sponsors" src={sponsors} />
+                <img alt="" className="sponsors" src={sponsors} />
                     <div className="sort">
                         <span>Sort by : </span>
                         <select onChange={this.handleOnChange.bind(this)}>

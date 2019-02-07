@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import env from "./Environment";
 import LoadingDots from "./LoadingDots";
 class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
+
     formatDate(date){
         let currentDate = new Date();
-        console.log();
         let dateDiff = Math.round(( Date.parse(currentDate) - Date.parse(date) ) / (60 * 60 * 24 * 1000));
         if(dateDiff === 0){
             return "Today";
@@ -32,7 +29,11 @@ class Home extends Component {
             if(product.hasOwnProperty('rid')){
                 return (
                 <div className="card">
-                    <img className="ad" src={`${baseUrl}/ads/?r=${product.rid}`}/>
+                    <img alt="" className="ad" src={`${baseUrl}/ads/?r=${product.rid}`}/>
+                    <div className="card-body">
+                        <h1>Advertisement</h1>
+                        <div>We are a tech company.We got all sort of products & gadgets </div>
+                    </div>
                 </div>
                 )
             }
