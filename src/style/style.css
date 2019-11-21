@@ -1,47 +1,76 @@
-.navbar{
-    width: 100%;
-    color: white;
-    background-color: black;
-    padding: 0.5em;
+.navbar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: white;
+  background-color: rgb(255, 157, 157);
+  padding: 0.5em;
 }
-body{
-    margin: 0;
-    background-color: #ebebeb;
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.img-div{
-    border-radius: 0.3em;
+body {
+  margin: 0;
+  background-color: white;
 }
-img.sponsors{
-    width: 100%;
-    border-radius: 0.3em;
+.img-div {
+  border-radius: 0.3em;
 }
-.ad{
-    border-radius: 0.3em;
+img.sponsors {
+  width: auto;
+  border-radius: 0.3em;
 }
-h1{
-    margin: 0;
-    padding-left: 0.3em;
+.ad {
+  border-radius: 0.3em;
 }
-section{
-    margin: 1em;
+h1 {
+  margin: 0;
+  padding-left: 0.3em;
 }
-.card{
-    background-color: white;
-    padding: 1em;
-    margin-bottom: 1em;
-    border-radius: 0.3em;
-    -webkit-box-shadow: 2px 2px 12px 0px rgba(184,184,184,0.35);
-    -moz-box-shadow: 2px 2px 12px 0px rgba(184,184,184,0.35);
-    box-shadow: 2px 2px 12px 0px rgba(184,184,184,0.35);
+section {
+  margin: 1em;
+}
+.card {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 0.3em;
+  width: auto;
+  height: auto;
+  -webkit-box-shadow: 2px 2px 12px 0px rgba(184, 184, 184, 0.35);
+  -moz-box-shadow: 2px 2px 12px 0px rgba(184, 184, 184, 0.35);
+  box-shadow: 2px 2px 12px 0px rgba(184, 184, 184, 0.35);
 
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.card-body{
-    flex-direction: column;
-    padding-left: 1em;
+.card-body {
+  flex-direction: row;
+  padding-left: 1em;
 }
-.sort{
-    margin: 1em 0;
+.sort {
+  margin: 1em 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

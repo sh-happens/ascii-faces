@@ -5,8 +5,7 @@
   "description": "Build a grid of product items and ads",
   "main": "server/index.js",
   "scripts": {
-    "start": "concurrently --kill-others \"SET PORT=3001 && react-scripts start\" \"SET PORT=3000 && json-server server/index.js --routes server/routes.json --middlewares server/handle-delay.js server/handle-ads.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start"
   },
   "author": "",
   "license": "",
